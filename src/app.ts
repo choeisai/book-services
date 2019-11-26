@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 
 import { BookController } from './controllers'
+import mongoose from 'mongoose'
 
 class App {
   public app: Application
@@ -12,6 +13,7 @@ class App {
   constructor() {
     this.app = express()
     this.setConfig()
+    this.setMongoConfig()
     this.bookController = new BookController(this.app)
   }
 
@@ -19,6 +21,14 @@ class App {
     this.app.use(bodyParser.json({ limit: "50mb " }))
     this.app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }))
     this.app.use(cors())
+  }
+
+  private setMongoConfig() {
+    // TODO: remove hard code
+    mongoose.Promise = global.Promise
+    mongoose.connect(`mongodb://localhost:27017/deeple`, {
+      useNewUrlParser: true
+    })
   }
 }
 
