@@ -1,0 +1,45 @@
+
+We'd like you to develop RESTFul/GraphQL APIs for a Bookstore, for helping
+bookseller manage his/her data.
+
+* Endpoints
+  - Listing book data (Sorting + Pagination)
+  - Searching book.
+  - Creating book data.
+  - Updating book data.
+  - Deleting book data.
+  - Fulfilling book to store (update amount of book).
+  - Selling book (update sold amount of book).
+  - Listing bestseller. (decide by amount of book that has been sold.)
+    + All bestseller.
+    + Bestseller by book's category.
+
+* Example Book Model
+  - Title
+  - Synopsis
+  - ISBN10
+  - ISBN13
+  - Language
+  - Publisher
+  - Edition
+  - Price
+    + Ebook
+    + Paperback
+  - Sold amount
+  - Current amount
+
+* Expectations
+  - Code must be written in the below mentioned technology stack.
+    + Node.js.
+    + Typescript.
+  - Can use RESTFUL or GraphQL.
+  - You can decide what database, you use.
+  - Testing is a must.
+  - Good code structure and clean code.
+  - You can use any tools to develop it's up to you.
+
+* How to submit
+  - Push your project to any public git provider and send to us
+
+* Contact
+If you have any further questions, please feel free to contact us on ​ arm@deeple.ai
