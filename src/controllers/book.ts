@@ -22,6 +22,8 @@ class BookController {
       .put(this.bookService.updateBook)
     this.app.route(`${prefix}/book/sell/:book_id`)
       .put(this.bookService.sellBook)
+    this.app.route(`${prefix}/book/fulfill/:book_id`)
+      .put(this.bookService.fulfillBook)
   }
 }
 

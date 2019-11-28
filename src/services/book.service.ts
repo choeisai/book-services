@@ -139,4 +139,32 @@ export class BookService {
       res.send(error)
     }
   }
+
+  public async fulfillBook(req: Request, res: Response) {
+    const bookId = req.params.book_id;
+    const { body } = req
+    const { bookAmount } = body
+    let bookAmountNumber = Number(bookAmount)
+
+    if (_.isNaN(bookAmountNumber)) {
+      return res.status(422).json({error: "Invalid input type"})
+    }
+
+    try {
+      // Get existing book
+      const book = await Book.findById(bookId) as IBook
+      let updatedData = {
+        currentPaperbackAmount: book.currentPaperbackAmount + bookAmountNumber
+      };
+
+      // Update book
+      const updatedBook = await Book.findByIdAndUpdate(bookId, updatedData) as IBook
+
+      Object.assign(updatedBook, updatedData)
+      res.json(updatedBook)
+    }
+    catch (error) {
+      res.send(error)
+    }
+  }
 }
