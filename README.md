@@ -101,6 +101,5 @@
   skip: number
   limit: number
   ```
-  http://localhost:9001/api/v1/books/bestseller?filter=ddd&sort=DATE_ASC&skip=0&limit=2  ```
-```
-```
+  http://localhost:9001/api/v1/books/bestseller?filter=ddd&sort=DATE_ASC&skip=0&limit=2
+  ```
