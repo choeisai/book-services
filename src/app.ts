@@ -18,15 +18,15 @@ class App {
   }
 
   private setConfig() {
-    this.app.use(bodyParser.json({ limit: "50mb " }))
-    this.app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }))
+    this.app.use(bodyParser.json())
+    this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(cors())
   }
 
   private setMongoConfig() {
     // TODO: remove hard code
     mongoose.Promise = global.Promise
-    mongoose.connect(`mongodb://localhost:27017/deeple`, {
+    mongoose.connect(`mongodb://localhost:27019/books`, {
       useNewUrlParser: true
     })
   }

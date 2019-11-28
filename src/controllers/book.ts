@@ -10,7 +10,12 @@ class BookController {
   }
 
   public routes() {
-    this.app.route("/").get(this.bookService.hello)
+    const apiVersion = "v1"
+    const prefix = `/api/${apiVersion}`
+
+    this.app.route(`${prefix}/`).get(this.bookService.hello)
+    this.app.route(`${prefix}/books`).get(this.bookService.getAllBooks)
+    this.app.route(`${prefix}/book`).post(this.bookService.addNewBook)
   }
 }
 
