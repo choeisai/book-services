@@ -12,6 +12,8 @@ const BookSchema = new mongoose.Schema({
   paperbackPrice: Number,
   soldAmount: Number,
   currentAmount: Number
+}, {
+  timestamps: true
 })
 
 export const Book = mongoose.model("Book", BookSchema)
