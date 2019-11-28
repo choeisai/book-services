@@ -24,6 +24,8 @@ class BookController {
       .put(this.bookService.sellBook)
     this.app.route(`${prefix}/book/fulfill/:book_id`)
       .put(this.bookService.fulfillBook)
+    this.app.route(`${prefix}/books/bestseller`)
+      .get(this.bookService.getBestsellerBooks)
   }
 }
 

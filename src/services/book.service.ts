@@ -167,4 +167,55 @@ export class BookService {
       res.send(error)
     }
   }
+
+  public async getBestsellerBooks(req: Request, res: Response) {
+    const {skip, limit } = req.query
+
+    // Default options
+    let options = {
+      skip: 0,
+      limit: 20,
+    }
+
+    // Pagingation
+    if (!_.isNaN(Number(skip))) {
+      options.skip = Number(skip)
+    }
+    if (!_.isNaN(Number(limit))) {
+      options.limit = Number(limit)
+    }
+
+    // Bestseller = soldEbookAmount + soldPaperbackAmount
+    let query = [
+      {
+        $addFields: {
+          sort_order: {
+            $add:[ "$soldEbookAmount", "$soldPaperbackAmount"]
+          }
+        }
+      },
+      {
+        $sort:{
+          sort_order:-1
+        }
+      }, {
+        $project:{
+          sort_order: 0
+        }
+      }, {
+        $skip: options.skip
+      }, {
+        $limit: options.limit
+      }
+    ]
+
+    try {
+      const book = await Book.aggregate(query)
+
+      res.json(book)
+    }
+    catch (error) {
+      return res.send(error)
+    }
+  }
 }
