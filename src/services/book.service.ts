@@ -18,11 +18,25 @@ export class BookService {
   }
 
   public async addNewBook(req: Request, res: Response) {
+    // TODO: Add validator
     const { body } = req
     const newBook = new Book(body)
     try {
       const book = await newBook.save()
       res.json(book)
+    }
+    catch (error) {
+      return res.status(200).send(error)
+    }
+  }
+
+  public async deleteBook(req: Request, res: Response) {
+    const bookId = req.params.book_id;
+    try {
+      await Book.findByIdAndDelete(bookId)
+      res.json({
+        message: `Deleted successfully`
+      })
     }
     catch (error) {
       return res.status(200).send(error)
