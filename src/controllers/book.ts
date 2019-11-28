@@ -22,6 +22,8 @@ class BookController {
       .post(this.bookService.addNewBook)
     this.app.route(`${prefix}/book/:book_id`)
       .delete(this.bookService.deleteBook)
+    this.app.route(`${prefix}/book/:book_id`)
+      .put(this.bookService.updateBook)
   }
 }
 

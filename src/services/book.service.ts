@@ -13,7 +13,7 @@ export class BookService {
       res.json(book)
     }
     catch (error) {
-      return res.status(200).send(error)
+      return res.send(error)
     }
   }
 
@@ -26,7 +26,7 @@ export class BookService {
       res.json(book)
     }
     catch (error) {
-      return res.status(200).send(error)
+      return res.send(error)
     }
   }
 
@@ -39,7 +39,21 @@ export class BookService {
       })
     }
     catch (error) {
-      return res.status(200).send(error)
+      return res.send(error)
+    }
+  }
+
+  public async updateBook(req: Request, res: Response) {
+    // TODO: Add validator
+    const bookId = req.params.book_id;
+    const { body } = req
+
+    try {
+      const updatedBook = await Book.findByIdAndUpdate(bookId, body)
+      res.json(updatedBook)
+    }
+    catch (error) {
+      return res.send(error)
     }
   }
 }
