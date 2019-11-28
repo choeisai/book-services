@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 // import { MongooseDocument } from 'mongoose'
 import _ from 'lodash'
 
-import { Book } from '../models'
+import { Book, IBook } from '../models'
 
 export class BookService {
   public async getAllBooks(req: Request, res: Response) {
@@ -92,6 +92,51 @@ export class BookService {
     }
     catch (error) {
       return res.send(error)
+    }
+  }
+
+  public async sellBook(req: Request, res: Response) {
+    const bookId = req.params.book_id;
+    const { body } = req
+    const { bookType, soldAmount } = body
+
+    if (_.isNaN(Number(soldAmount))) {
+      return res.status(422).json({error: "Invalid input type"})
+    }
+
+
+    try {
+      const book = await Book.findById(bookId) as IBook
+
+      let soldAmountNumber = Number(soldAmount)
+      let updatedData = {};
+
+      // Sell paperback
+      if (bookType === "paperback") {
+        if (book.currentPaperbackAmount <= soldAmountNumber) {
+          return res.status(422).json({error: "Current amount less than sold amount"})
+        }
+
+        updatedData = {
+          soldPaperbackAmount: book.soldPaperbackAmount + soldAmountNumber,
+          currentPaperbackAmount: book.currentPaperbackAmount - soldAmountNumber,
+        }
+      // Sell ebook
+      } else if (bookType === "ebook") {
+        updatedData = {
+          soldEbookAmount: book.soldEbookAmount + soldAmountNumber,
+        }
+      } else {
+        return res.status(422).json({error: "Invalid book type"})
+      }
+
+      const updatedBook = await Book.findByIdAndUpdate(bookId, updatedData) as IBook
+
+      Object.assign(updatedBook, updatedData)
+      res.json(updatedBook)
+    }
+    catch (error) {
+      res.send(error)
     }
   }
 }
