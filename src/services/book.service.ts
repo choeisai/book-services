@@ -1,11 +1,53 @@
 import { Request, Response } from 'express'
-import { MongooseDocument } from 'mongoose'
+// import { MongooseDocument } from 'mongoose'
+import _ from 'lodash'
+
 import { Book } from '../models'
 
 export class BookService {
   public async getAllBooks(req: Request, res: Response) {
+    const {skip, limit, sort, filter} = req.query
+
+    // Default options
+    let options = {
+      skip: 0,
+      limit: 2,
+      sort: {
+        _id: 1
+      }
+    }
+    let query = {}
+
+    // Pagingation
+    if (!_.isNaN(Number(skip))) {
+      options.skip = Number(skip)
+    }
+    if (!_.isNaN(Number(limit))) {
+      options.limit = Number(limit)
+    }
+
+    // Sorting
+    if (sort === "ASC") {
+      options.sort = { _id: 1 }
+    }
+    if (sort === "DESC") {
+      options.sort = { _id: -1 }
+    }
+
+    // Filter by regex
+    if (!_.isNull(filter)) {
+      var regex = new RegExp(`${filter}`);
+      query = {
+        title: {
+          $regex: regex,
+          $options: 'i'
+        }
+      }
+    }
+
     try {
-      const book = await Book.find()
+      const book = await Book.find(query, null, options)
+
       res.json(book)
     }
     catch (error) {
