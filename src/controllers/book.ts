@@ -13,9 +13,6 @@ class BookController {
     const apiVersion = "v1"
     const prefix = `/api/${apiVersion}`
 
-    this.app.route(`${prefix}/`)
-      .get(this.bookService.hello)
-
     this.app.route(`${prefix}/books`)
       .get(this.bookService.getAllBooks)
     this.app.route(`${prefix}/book`)

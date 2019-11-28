@@ -3,10 +3,6 @@ import { MongooseDocument } from 'mongoose'
 import { Book } from '../models'
 
 export class BookService {
-  public hello(req: Request, res: Response) {
-    return res.status(200).send("Hello from Book Service")
-  }
-
   public async getAllBooks(req: Request, res: Response) {
     try {
       const book = await Book.find()
